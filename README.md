@@ -52,7 +52,22 @@ This will create the *target* folder, which will contain the *jar* file needed t
 
 ## Install Apache Flink
 
-TODO
+### Prerequisites
+* To be able to run Flink, the only requirement is to have a working Java 7.x (or higher) installation.
+    * You can check your current java version using the command: **java -version**
+
+### Setup
+An Apache Hadoop installation is not required to use Flink. If you plan to run Flink in YARN or process data stored in HDFS then select the version matching your installed Hadoop version.
+
+1. Download the latest Apache Flink stable release from [here](https://flink.apache.org/downloads.html).
+2. Unpack the downloaded archive.
+3. Navigate to the unpacked directory and start Flink (local or cluster) using the scripts located in the bin directory.
+    * ./bin/start-local.sh -> start a local Flink cluster
+4. Check the JobManager’s web frontend at [http://localhost:8081](http://localhost:8081) and make sure everything is up and running. The web frontend should report a single available TaskManager instance.
+5. To stop Flink when you finish yor work use the corresponding stop-*.sh script located in the bin directory.
+    * ./bin/stop-local.sh -> stop a local Flink cluster
+
+You can find a quick start guide [here](https://ci.apache.org/projects/flink/flink-docs-release-1.3/quickstart/setup_quickstart.html).
 
 ## Running FlinkBWA
 
