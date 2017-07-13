@@ -7,9 +7,9 @@ import org.apache.flink.util.Collector;
 /**
  * Class that implements functionality of grouping FASTQ
  */
-public class FASTQRecordCreator implements GroupReduceFunction<Tuple2<Long, Tuple2<String, Long>>, Tuple2<Long, String>> {
+public class FASTQRecordCreator implements GroupReduceFunction<Tuple2<Long, Tuple2<Long, String>>, Tuple2<Long, String>> {
 
-	public void reduce(Iterable<Tuple2<Long, Tuple2<String, Long>>> recordGroup, Collector<Tuple2<Long, String>> out) throws Exception {
+	public void reduce(Iterable<Tuple2<Long, Tuple2<Long, String>>> recordGroup, Collector<Tuple2<Long, String>> out) throws Exception {
 		// We create the data to be contained inside the record
 		String seqName 		= null;
 		String seq			= null;
@@ -17,11 +17,11 @@ public class FASTQRecordCreator implements GroupReduceFunction<Tuple2<Long, Tupl
 		String extraSeqname	= null;
 		Long idx = 0L;
 
-		for (Tuple2<Long, Tuple2<String, Long>> item : recordGroup) {
+		for (Tuple2<Long, Tuple2<Long, String>> item : recordGroup) {
 			idx = item.f0;
-			Tuple2<String, Long> record = item.getField(2);
-			Long lineNo = record.f1;
-			String line = record.f0;
+			Tuple2<Long, String> record = item.f1;
+			Long lineNo = record.f0;
+			String line = record.f1;
 
 			if (lineNo == 0) {
 				seqName = line;

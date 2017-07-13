@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>es.citius</groupId>
-    <artifactId>citius-flink-bwa</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>flink-bwa</artifactId>
+    <version>0.1</version>
 
     <repositories>
         <repository>

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class BwaAlignmentBase implements Serializable {
 
@@ -96,25 +97,25 @@ public abstract class BwaAlignmentBase implements Serializable {
 	 * @param outputSamFileName The output where the final results will be stored
 	 * @return An ArrayList containing all the file locations
 	 */
-	public ArrayList<String> copyResults(String outputSamFileName) {
+	public Iterator<String> copyResults(String outputSamFileName) {
 		ArrayList<String> returnedValues = new ArrayList<String>();
 		String outputDir = this.bwaInterpreter.getOutputHdfsDir();
 
 		this.LOG.info("["+this.getClass().getName()+"] :: " + this.appId + " - " + this.appName + " Copying files...");
 
 		try {
-			//if (outputDir.startsWith("hdfs")) {
-			Configuration conf = new Configuration();
-			FileSystem fs = FileSystem.get(conf);
+//			if (outputDir.startsWith("hdfs")) {
+				Configuration conf = new Configuration();
+				FileSystem fs = FileSystem.get(conf);
 
-			fs.copyFromLocalFile(
-					new Path(this.bwaInterpreter.getOutputFile()),
-					new Path(outputDir + "/" + outputSamFileName)
-			);
-			/*} else {
-				File localSamOutput = new File(this.bwaInterpreter.getOutputFile());
-				Files.copy(Paths.get(localSamOutput.getPath()), Paths.get(outputDir, localSamOutput.getName()));
-			}*/
+				fs.copyFromLocalFile(
+						new Path(this.bwaInterpreter.getOutputFile()),
+						new Path(outputDir + "/" + outputSamFileName)
+				);
+//			} else {
+//				File localSamOutput = new File(this.bwaInterpreter.getOutputFile());
+//				Files.copy(Paths.get(localSamOutput.getPath()), Paths.get(outputDir, localSamOutput.getName()));
+//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			this.LOG.error(e.toString());
@@ -126,28 +127,28 @@ public abstract class BwaAlignmentBase implements Serializable {
 
 		returnedValues.add(outputDir + "/" + outputSamFileName);
 
-		return returnedValues;
+		return returnedValues.iterator();
 	}
 
 	/**
 	 *
-	 * @param readBatchID Identification for the sam file
+	 * @param timestamp Identification for the sam file
 	 * @return A String for the sam file name
 	 */
-	public String getOutputSamFilename(Integer readBatchID) {
-		return this.appName + "-" + this.appId + "-" + readBatchID + ".sam";
+	public String getOutputSamFilename(Long timestamp) {
+		return this.appName + "-" + this.appId + "-" + timestamp + ".sam";
 	}
 
 	/**
 	 *
-	 * @param readBatchID Identification for the sam file
+	 * @param timestamp Identification for the sam file
 	 * @param fastqFileName1 First of the FASTQ files
 	 * @param fastqFileName2 Second of the FASTQ files
 	 * @return
 	 */
-	public ArrayList<String> runAlignmentProcess( Integer readBatchID, String fastqFileName1, String fastqFileName2) {
+	public Iterator<String> runAlignmentProcess(Long timestamp, String fastqFileName1, String fastqFileName2) {
 		//The output filename (without the tmp directory)
-		String outputSamFileName = this.getOutputSamFilename(readBatchID);
+		String outputSamFileName = this.getOutputSamFilename(timestamp);
 		this.alignReads(outputSamFileName, fastqFileName1, fastqFileName2);
 
 		// Copy the result to HDFS

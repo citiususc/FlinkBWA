@@ -48,7 +48,7 @@ The default way to build **FlinkBWA** is:
 
 This will create the *target* folder, which will contain the *jar* file needed to run **FlinkBWA**:
 
-* **citius-flink-bwa-1.0-SNAPSHOT.jar** - jar file to launch with Flink.
+* **flink-bwa-0.1.jar** - jar file to launch with Flink.
 
 ## Install Apache Flink
 

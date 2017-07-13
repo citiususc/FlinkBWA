@@ -33,13 +33,13 @@ public class BwaOptions {
 	private boolean useReducer			= false;
 
 	private String correctUse =
-		"flink run -c es.citius.main.FlinkBWA FlinkBWA-0.2.jar";// [FlinkBWA Options] Input.fastq [Input2.fastq] Output\n";
+		"flink run -c es.citius.main.FlinkBWA flink-bwa-0.1.jar";// [FlinkBWA Options] Input.fastq [Input2.fastq] Output\n";
 
 
 	// Header to show when the program is not launched correctly
 	private String header = "\t<FASTQ file 1> [FASTQ file 2] <SAM file output>\n\nFlinkBWA performs genomic alignment using bwa in Flink on a Hadoop/YARN cluster\nAvailable FlinkBWA options are:\n";
 
-	private String headerAlt = "flink run -c es.citius.main.FlinkBWA FlinkBWA-0.2.jar\n" +
+	private String headerAlt = "flink run -c es.citius.main.FlinkBWA flink-bwa-0.1.jar\n" +
 			"       [-a | -b | -m]  [-f | -k] [-h] [-i <Index prefix>]   [-n <Number of\n" +
 			"       partitions>] [-p | -s] [-r]  [-w <\"BWA arguments\">]\n" +
 			"       <FASTQ file 1> [FASTQ file 2] <SAM file output>";
@@ -126,8 +126,6 @@ public class BwaOptions {
 				while(newOptionOutput.length()<=50) {
 					newOptionOutput = newOptionOutput + " ";
 				}
-
-				//newOptionOutput = newOptionOutput + "\t\t\t\t" + currentOption.getDescription();
 				newOptionOutput = newOptionOutput + currentOption.getDescription();
 
 				System.out.println(newOptionOutput);
@@ -267,7 +265,7 @@ public class BwaOptions {
 			}
 
 			//Input and output paths
-			String otherArguments[] = cmd.getArgs(); //With this we get the rest of the arguments
+			String otherArguments[] = cmd.getArgs(); //With this we get the rest of the
 
 			if ((otherArguments.length != 2) && (otherArguments.length != 3)) {
 				LOG.error("["+this.getClass().getName()+"] No input and output has been found. Aborting.");
